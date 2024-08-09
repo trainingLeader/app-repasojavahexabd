@@ -22,7 +22,7 @@ public class PaisRepository implements PaisService{
     }
     @Override
     public void createPais(Pais pais) {
-        String sql = "INSERT INTO pais (name) VALUES (?)";
+        String sql = "INSERT INTO pais (descripcion) VALUES (?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql,
                         PreparedStatement.RETURN_GENERATED_KEYS)) {
