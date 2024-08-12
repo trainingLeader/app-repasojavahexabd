@@ -1,8 +1,10 @@
 package com.repasojava.Pais.domain.service;
 
 import com.repasojava.Pais.domain.entity.Pais;
-
+import java.util.Optional;
 public interface PaisService {
     void createPais(Pais pais);
-    Pais findPaisById(Long id);
+    Optional<Pais> findPaisById(Long id);
+    void update(Long id);
+
 }

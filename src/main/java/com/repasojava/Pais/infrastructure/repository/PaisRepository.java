@@ -1,9 +1,12 @@
 package com.repasojava.Pais.infrastructure.repository;
 
+import com.mysql.cj.xdevapi.Statement;
 import com.repasojava.Pais.domain.entity.Pais;
 import com.repasojava.Pais.domain.service.PaisService;
 import java.util.Properties;
 import java.sql.*;
+import java.util.Optional;
+
 public class PaisRepository implements PaisService{
     private Connection connection;
 
@@ -32,7 +35,7 @@ public class PaisRepository implements PaisService{
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    pais.setId(generatedKeys.getInt(1));
+                    pais.setId(generatedKeys.getLong(1));
                 }
             }
             connection.close();
@@ -43,9 +46,28 @@ public class PaisRepository implements PaisService{
     }
 
     @Override
-    public Pais findPaisById(Long id) {
+    public Optional<Pais> findPaisById(Long id) {
+        String query = "SELECT id,descripcion FROM pais WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        Pais pais = new Pais(
+                            resultSet.getLong("id"),
+                            resultSet.getString("descripcion")
+                        );
+                        return Optional.of(pais);
+                    }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+    @Override
+    public void update(Long id) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findUserById'");
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
 }
