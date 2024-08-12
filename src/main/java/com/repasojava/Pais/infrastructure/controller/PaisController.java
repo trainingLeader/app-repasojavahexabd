@@ -8,6 +8,7 @@ import com.repasojava.Pais.infrastructure.repository.PaisRepository;
 
 import java.text.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class PaisController {
     private PaisService paisService;
@@ -20,27 +21,45 @@ public class PaisController {
         this.findPaisUseCase = new FindPaisUseCase(paisService);
     }
 
+    public void mainMenu(){
+        String opciones = "1. Add Country\n2. Search country\n3. Return main menu";
+        int op;
+        do{
+            op =Integer.parseInt(JOptionPane.showInputDialog(null,opciones));
+            switch (op) {
+                case 1:
+                    addCountry();
+                    break;
+                case 2:
+                    findCountry();
+                    break;
+                case 3:
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Error en la opcion ingresada","Error",JOptionPane.ERROR_MESSAGE);
+                    break;
+            }
+
+        }while(op!=3);
+
+    }
     public void addCountry() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Enter country name: ");
-            String name = scanner.nextLine();
+        
+
+            String name = JOptionPane.showInputDialog(null,"Country Name :");
 
             Pais pais = new Pais();
             pais.setName(name);
 
             createPaisUseCase.execute(pais);
-        }
 
-        System.out.println("Country created successfully!");
     }
     public void findCountry() {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Enter country Id: ");
-            Long id = scanner.nextLong();
+            Long id = Long.parseLong(JOptionPane.showInputDialog(null,"Country Id :"));
             findPaisUseCase.execute(id).ifPresentOrElse(
                 countryFound -> {
-                        System.out.println("Esta es la del pais");
-                        System.out.println(MessageFormat.format( "{0}",countryFound.getName()));
+                        JOptionPane.showMessageDialog(null, countryFound.toString(),"Error",JOptionPane.ERROR_MESSAGE);
                     },
                     () -> {
             });

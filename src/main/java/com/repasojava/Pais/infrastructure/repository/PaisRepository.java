@@ -1,6 +1,6 @@
 package com.repasojava.Pais.infrastructure.repository;
 
-import com.mysql.cj.xdevapi.Statement;
+
 import com.repasojava.Pais.domain.entity.Pais;
 import com.repasojava.Pais.domain.service.PaisService;
 import java.util.Properties;

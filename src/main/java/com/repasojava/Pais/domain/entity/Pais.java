@@ -1,5 +1,5 @@
 package com.repasojava.Pais.domain.entity;
-
+import java.text.*;
 public class Pais {
     private Long id;
     private String name;
@@ -26,6 +26,13 @@ public class Pais {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        String data = MessageFormat.format("Id :{0}\nName :{1}",this.id,this.name);
+        return data;
     }
 
     
